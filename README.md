@@ -8,6 +8,7 @@ Xây dựng một chương trình cho phép truy vấn hình ảnh sử dụng c
 
 ## Download dataset
 > Dataset này chưa được xử lý, bắt đầu tử step 3
+> 
 `!gdown --id 101-uruLYuaBnPStVJdB6x1LjpWNblsaI`
 
 ## Step 1: Crawl urls chứa ảnh từ web về, lưu thành file txt.

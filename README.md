@@ -35,4 +35,7 @@ Tải các hình ảnh theo từng topic vào các thư mục với tên tương
 
 `python feature_extractor.py`
 
+## Step 5: 
+- Run web: [](http://localhost:6868/)
+`python app.py`
 <img width="475" alt="image" src="https://user-images.githubusercontent.com/88385496/198692288-83307a4c-32cc-4fcd-8321-e323eab72ac4.png">

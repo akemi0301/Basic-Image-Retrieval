@@ -10,6 +10,10 @@ Xây dựng một chương trình cho phép truy vấn hình ảnh sử dụng c
 ## Download dataset
 > Data đã được xử lý, tải [tại đây](https://drive.google.com/file/d/1bPADa_yqvDENnNiRLq__GFn4DrUTt_NY/view?usp=sharing). Chuyển sang step 4 
 
+## Yêu cầu
+- python==3.8.10
+- `pip install -r requirements.txt`
+
 ## Step 1: Crawl urls chứa ảnh từ web về, lưu thành file txt.
 Gửi request đến trang freeimages.com, lưu các đường dẫn của ảnh vào file txt theo từng topic.
 

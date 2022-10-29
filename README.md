@@ -32,6 +32,7 @@ Tải các hình ảnh theo từng topic vào các thư mục với tên tương
 
 ## Step 4: 
 - Lưu data đã được xử lý vào folder static/images
+- Tải [weight_resnet50](https://drive.google.com/file/d/1MGnNmnh7evfATsSSJTWcB-IPE36IVZ40/view?usp=share_link)
 - Sau đó chạy file feature_extractor.py để trích xuất feature tập dataset. Sau khi chạy xong thu được 1 file tại feature/all_features.npz 
 
 `python feature_extractor.py`

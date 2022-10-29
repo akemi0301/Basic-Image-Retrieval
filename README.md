@@ -7,6 +7,7 @@ Xây dựng một chương trình cho phép truy vấn hình ảnh sử dụng c
 <img width="459" alt="image" src="https://user-images.githubusercontent.com/88385496/198692020-95495c2c-725f-4fd6-b850-7d1bc13238f0.png">
 
 ## Download dataset
+> Dataset này chưa được xử lý, bắt đầu tử step 3
 `!gdown --id 101-uruLYuaBnPStVJdB6x1LjpWNblsaI`
 
 ## Step 1: Crawl urls chứa ảnh từ web về, lưu thành file txt.

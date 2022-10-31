@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Basic Image Retrieval</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            header {
+                padding-top:50px;
+                text-align: center;
+                padding-bottom:30px;
+                color: black; 
+                
+            }
+            header i {
+                font-size: 30px;
+                
+            }
+            h5{
+                padding-top:20px;
+                padding-bottom:5px;    
+                color: black;     
+            }
+            body{
+                background-color: #EAEAEA;
+            }
+
+            .row {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 4px 4px;
+            margin: 10px;
+            }
+
+            /* Create two equal columns that sits next to each other */
+            .column {
+            flex: 50%;
+            padding: 0 4px;
+            margin-left: 10px;
+            }
+
+            .column img {
+            /* margin-top: 8px; */
+            vertical-align: middle;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        <header><h2>TRA CỨU ẢNH <i class="fas fa-search"></i></h2></header>
+        <div class="container" style="margin-left: 31%">
+            <form id="fileUploadForm" 
+                method="POST" 
+              enctype="multipart/form-data">
+            <fieldset>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="row">
+                        <div class=".col-md-10">
+                                <div class="input-group">
+                                    <input type="hidden" id="filename" name="filename" value="">
+                                    <input type="file" id="uploadedFile" name="query_img" class="form-control form-control-sm">
+                                    <div class="input-group-btn">
+                                        <input type="submit" value="Tra cứu" class="rounded-0 btn btn-primary">
+                                    </div>
+                                </div>
+                        </div>
+                        </div>
+                    </div>                        
+                </div>
+            </fieldset>    
+        </form>
+        </div>
+        </div>
+
+    <div class="row">
+
+        <div class="c">
+            {% if query_path %}
+            <h5>ẢNH TRUY VẤN: </h5>
+            <img src="{{ query_path }}" width="300px" height="200px" margin-top ="8px">
+            <!-- <h6>
+             <figcaption>{{ precision }}</figcaption>
+            </h6> -->
+        </div>
+        <div class="column">
+            <div style="display: flex;">
+                <h5>KẾT QUẢ: </h5>
+                <div style="margin: 0px 0px 0px 5px;">
+                    <button id="img10" type="button" class="btn btn-outline-primary active" onclick="ten()">10 ảnh</button>
+                    <button id="img20" type="button" class="btn btn-outline-primary" onclick="twenty()">20 ảnh</button>
+                    <button id="img30" type="button" class="btn btn-outline-primary" onclick="thirty()">All</button>
+                </div>
+                <div style="margin: 0px 0px 0px 500px;">
+                    <button id="img1" type="button" class="btn btn-outline-primary active" onclick="forw()">Decrease</button>
+                    <button id="img2" type="button" class="btn btn-outline-primary" onclick="back()">Ascending</button>
+                </div>
+            </div>
+            {% for score in scores %}
+            <figure style="float: left; margin-right: 10px">
+                <img  src="{{ score[0] }}" height="200px">
+                <!-- {% if score[1] %}
+                   <h6><figcaption style="color:green;">{{ score[1] }}</figcaption></h6>
+                {% else %}
+                   <h6><figcaption style="color: red;" >{{ score[1] }}</figcaption></h6>
+                {% endif %} -->
+            </figure>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
+    </body>
+</html>

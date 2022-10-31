@@ -25,6 +25,6 @@ Với tập ảnh, các véc tơ đặc trưng được trích xuất sẽ đư�
  
  Sau khi tìm được cụm gần nhất với điểm ảnh truy vấn rồi. Chúng ta lần nữa sử dụng khoảng cách Euclid để tính khoảng cách giữ điểm ảnh truy vấn và các điểm trong cụm gần nhất đó. Sau đó sắp xếp lại các điểm trong cụm theo thứ tự tăng dần của khoảng cách tới điểm ảnh truy vấn. Mục đích để lấy ra tối đa 100 điểm có khoảng cách gần nhất. Và những điểm đó chính là những ảnh giống với ảnh truy vấn nhất, là kết quả của phương pháp tra cứu ảnh nhanh.
  
-### Tạo web với Flask
+### 6. Tạo web với Flask
 
 ![demo_cv](https://user-images.githubusercontent.com/85627308/198989138-0b810438-cddd-48fb-93b1-8694e75c4b75.png)

@@ -4,7 +4,7 @@ from tensorflow.keras.preprocessing import image as kimage
 from model import FeatureExtractor
 
 root_img_path = "../static/img/"
-root_fearure_path = "../static/feature/"
+root_feature_path = "../static/feature/"
 dic_categories = ['animal', 'furniture', 'plant', 'scenery']
 
 def folder_to_images(folder):
@@ -42,5 +42,5 @@ if __name__ == '__main__':
         if folder.split("_")[0] in dic_categories:
             path = root_img_path + folder
             images_np, images_path = folder_to_images(path)
-            print(root_fearure_path+folder)
-            np.savez_compressed(root_fearure_path+folder, array1=np.array(images_path), array2=fe.extract(images_np))
+            print(root_feature_path+folder)
+            np.savez_compressed(root_feature_path+folder, array1=np.array(images_path), array2=fe.extract(images_np))

@@ -8,7 +8,7 @@ Xây dựng một chương trình cho phép truy vấn hình ảnh sử dụng c
 <img width="475" alt="image" src="https://user-images.githubusercontent.com/88385496/198692288-83307a4c-32cc-4fcd-8321-e323eab72ac4.png">
 
 ## Download dataset
-> Data đã được xử lý, tải [tại đây](https://drive.google.com/file/d/1bPADa_yqvDENnNiRLq__GFn4DrUTt_NY/view?usp=sharing). Chuyển sang step 4 
+> Data đã được xử lý, tải [tại đây](https://drive.google.com/file/d/1TtQukE5VE4r7DNZcSJaTpRxH1yaFph1A/view?usp=sharing). Chuyển sang step 4 
 
 ## Yêu cầu
 - python==3.8.10

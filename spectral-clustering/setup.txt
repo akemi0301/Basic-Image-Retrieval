@@ -5,3 +5,4 @@ pillow
 sklearn
 scipy
 flask
+BeautifulSoup4

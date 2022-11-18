@@ -1,67 +1,44 @@
-import math
 import os
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
-from tensorflow.keras.models import  Model
-from PIL import Image
 import numpy as np
 import pandas as pd
+from tensorflow.keras.preprocessing import image
+from model import FeatureExtractor
+
+root_img_path = "./static/img/"
+root_feature_path = "./static/feature/"
+dic_categories = ['animal', 'furniture', 'plant', 'scenery']
+
+def folder_to_images(folder, label):
+
+    list_dir = [folder + '/' + name for name in os.listdir(folder) if name.endswith((".jpg", ".png", ".jpeg"))]
+    
+    i = 0
+    images_np = np.zeros(shape=(len(list_dir), 224, 224, 3))
+    images_path = []
+    labels = []
+    for path in list_dir:
+        try:
+            img = image.load_img(path, target_size=(224, 224))
+            images_np[i] = image.img_to_array(img, dtype=np.float32)
+            images_np[i] = np.expand_dims(images_np[i], axis=0)
+            images_path.append(path)
+            labels.append(label)
+            i += 1
+            
+        except Exception:
+            print("error: ", path)
 
 
-# Ham tao model
-def get_extract_model():
-    vgg16_model = VGG16(weights='imagenet')
-    extract_model = Model(inputs=vgg16_model.inputs, outputs = vgg16_model.get_layer("fc1").output)
-    return extract_model
+    return images_np, images_path, labels
 
 
-# Ham tien xu ly, chuyen doi hinh anh thanh tensor
-def image_preprocess(img):
-    img = img.resize((224,224))
-    img = img.convert("RGB")
-    x = image.img_to_array(img)
-    x = np.expand_dims(x, axis=0)
-    x = preprocess_input(x)
-    return x
+if __name__ == '__main__':
 
-# Ham trich xuat dac trung anh
-def extract_vector(model, image_path):
-    print("Xu ly : ", image_path)
-    img = Image.open(image_path)
-    img_tensor = image_preprocess(img)
-    # Trich dac trung
-    vector = model.predict(img_tensor)[0]
-    # Chuan hoa vector = chia chia L2 norm (tu google search)
-    vector = vector / np.linalg.norm(vector)
-    return vector
-
-# Dinh nghia thu muc data
-data_folder = "./static/img"
-
-# Khoi tao model
-model = get_extract_model()
-
-vectors = []
-paths = []
-contents = []
-
-for folder_name in os.listdir(data_folder):
-    folder_path_full=os.path.join(data_folder,folder_name)
-    print(folder_path_full, "\n")
-    for image_path in os.listdir(folder_path_full):
-      # Noi full path
-      content = str(image_path[0:3])
-      image_path_full = os.path.join(data_folder,folder_name,image_path)
-      # Trich dac trung 
-      image_vector = extract_vector(model,image_path_full)
-      # Add dac trung va full path vao list
-      vectors.append(image_vector)
-      paths.append(image_path_full)
-      contents.append(content)
-
-# Create the dataframe 
-df = pd.DataFrame(np.array(vectors))
-df['Content'] = pd.Series(contents, index=df.index)
-df['Path'] = pd.Series(paths, index=df.index)
-
-df.to_csv("./static/feature/features_img.csv", index = False)
+    fe = FeatureExtractor()
+    for folder in os.listdir(root_img_path):
+        if folder.split("_")[0] in dic_categories:
+            label = folder.split("_")[1]
+            path = root_img_path + folder
+            images_np, images_path, labels = folder_to_images(path, label)
+            print(root_feature_path+folder)
+            np.savez_compressed(root_feature_path+folder, array1=np.array(images_path), array2=fe.extract(images_np), array3=np.array(labels))

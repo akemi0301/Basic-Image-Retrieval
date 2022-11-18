@@ -10,7 +10,7 @@ Ta coi tập ảnh như là một đồ thị, với mỗi đỉnh của đồ t
 Khi tra cứu ảnh, thay vì so sánh tính toán độ tương đồng giữa véc tơ đặc trưng của ảnh truy vấn với từng véc tơ đặc trưng của các bức ảnh trong tập ảnh thì giờ đây ta chỉ phải so sánh nó với véc tơ đặc trưng của tâm của mỗi cụm.
 
 ### 3. Trích xuất đặc trưng ảnh bằng Resnet50
-![vgg16_model](https://open-instruction.com/loading/2021/05/q.pngpg)
+![resnet50_model](https://open-instruction.com/loading/2021/05/q.png))
 
 Sử dụng pretrained Resnet50 để trích xuất đặc trưng từ ảnh truy vấn và tập ảnh. 
 Với tập ảnh, các véc tơ đặc trưng được trích xuất sẽ được lưu lại thành cơ sở dữ liệu đặc trưng. Các véc tơ đặc trưng được trích xuất sẽ lưu vào dưới dạng một DataFrame.
@@ -27,4 +27,4 @@ Với tập ảnh, các véc tơ đặc trưng được trích xuất sẽ đư�
  
 ### 6. Tạo web với Flask
 
-![demo_cv](https://user-images.githubusercontent.com/85627308/198989138-0b810438-cddd-48fb-93b1-8694e75c4b75.png)
+![demo_cv1](https://user-images.githubusercontent.com/85627308/202763049-f8f19ab9-e036-45c1-9b61-970a9c96c7ee.png)

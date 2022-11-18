@@ -9,10 +9,10 @@ Ta coi tập ảnh như là một đồ thị, với mỗi đỉnh của đồ t
 
 Khi tra cứu ảnh, thay vì so sánh tính toán độ tương đồng giữa véc tơ đặc trưng của ảnh truy vấn với từng véc tơ đặc trưng của các bức ảnh trong tập ảnh thì giờ đây ta chỉ phải so sánh nó với véc tơ đặc trưng của tâm của mỗi cụm.
 
-### 3. Trích xuất đặc trưng ảnh bằng VGG16
-![vgg16_model](https://www.bangkokmedjournal.com/storage/BKKMEDJ-15-1/15-1-1/15-1-1-F1.jpg)
+### 3. Trích xuất đặc trưng ảnh bằng Resnet50
+![vgg16_model](https://open-instruction.com/loading/2021/05/q.pngpg)
 
-Sử dụng pretrained VGG16 ImageNet để trích xuất đặc trưng từ ảnh truy vấn và tập ảnh. 
+Sử dụng pretrained Resnet50 để trích xuất đặc trưng từ ảnh truy vấn và tập ảnh. 
 Với tập ảnh, các véc tơ đặc trưng được trích xuất sẽ được lưu lại thành cơ sở dữ liệu đặc trưng. Các véc tơ đặc trưng được trích xuất sẽ lưu vào dưới dạng một DataFrame.
 
 ### 4. Phân cụm tập ảnh với Spectral clustering

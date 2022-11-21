@@ -14,7 +14,7 @@ Xây dựng một chương trình cho phép truy vấn hình ảnh sử dụng c
 Facebook AI Similarity Search (Faiss) là một thư viện sử dụng similiarity search cùng với clustering các vector. Faiss được nghiên cứu và phát triển bởi đội ngũ Facebook AI Research; được viết trong C++ và đóng gói trên môi trường Python. Bộ thư viện bao gồm các thuật toán tìm kiếm vector đa chiều trong similarity search
 
 ### Similarity search
-Bắt đầu với một tập các vector $$x_i$$ có **d** chiều, Faiss sẽ tự tạo một cấu trúc dữ liệu từ RAM. Sau đó, vector x mới sẽ được tính toán: 
+Bắt đầu với một tập các vector $x_i$ có **d** chiều, Faiss sẽ tự tạo một cấu trúc dữ liệu từ RAM. Sau đó, vector x mới sẽ được tính toán: 
 
 ## Yêu cầu
 - python==3.8.10

@@ -146,55 +146,33 @@
                     <h5>{{mess}}</h5>
                 </form>
             </div>
+        <div>
 
-          <!-- {% if query_path %} -->
+          {% if query_path %}
          <h2>Query</h2>
          <hr>
          
          <img src="{{ query_path }}" width="300px">
-         <!-- {% endif %} -->
-         <br>
-            <br />
-            <div style="display: flex;">
-                <h2>Results</h2>
-                <div style="margin: 0px 0px 0px 30px;" class="btn-group" role="group" aria-label="Basic example">
-                    <button id="img10" type="button" class="btn btn-outline-primary active" onclick="ten()">10 ảnh</button>
-                    <button id="img20" type="button" class="btn btn-outline-primary" onclick="twenty()">20 ảnh</button>
-                    <button id="img30" type="button" class="btn btn-outline-primary" onclick="thirty()">All</button>
-                </div>
-                <div style="margin: 0px 0px 0px 500px;" class="btn-group" role="group" aria-label="Basic example">
-                    <button id="img1" type="button" class="btn btn-outline-primary active" onclick="forw()">Decrease</button>
-                    <button id="img2" type="button" class="btn btn-outline-primary" onclick="back()">Ascending</button>
-                </div>
-            </div>
-            <hr />
-            <div id="parent">
-                <div id="0">
-                    {# block hiển thị ảnh 1->10#} {% for score in scores1 %}
-                    <figure name="d0" style="float: left; margin-right: 10px; margin-bottom: 10px;">
-                        <img src="{{ score[1] }}" height="160px" />
-                        <figcaption style="text-align: center;">score: {{ score[0] }}</figcaption>
-                    </figure>
-                    {% endfor %}
-                </div>
-                <div id="1" style="display: none;">
-                    {# block hiển thị ảnh 10->20#} {% for score in scores2 %}
-                    <figure style="float: left; margin-right: 10px; margin-bottom: 10px;">
-                        <img src="{{ score[1] }}" height="160px" />
-                        <figcaption>score: {{ score[0] }}</figcaption>
-                    </figure>
-                    {% endfor %}
-                </div>
-                <div id="2" style="display: none;">
-                    <!-- {# block hiển thị All ảnh#} {% for score in scores3 %} -->
-                    <figure style="float: left; margin-right: 10px; margin-bottom: 10px;">
-                        <img src="{{ score[1] }}" height="160px" />
-                        <figcaption>score: {{ score[0] }}</figcaption>
-                    </figure>
-                    {% endfor %}
-                </div>
-            </div>
+         <hr>
+         <h2>Result: </h2>
+            <h6>
+             <figcaption>{{ precision }}</figcaption>
+            </h6>
+            <hr>
+            {% for score in scores %}
+            <figure style="float: left; margin-right: 20px; margin-bottom: 20px;">
+                <img  src="{{ score[0] }}" height="200px">
+                {% if score[1] %}
+                   <h6><figcaption style="color:green;">{{ score[1] }}</figcaption></h6>
+                {% else %}
+                   <h6><figcaption style="color: red;" >{{ score[1] }}</figcaption></h6>
+                {% endif %}
+            </figure>
+            {% endfor %}
+            {% endif %}
+
         </div>
+
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -237,132 +215,6 @@
                $('.image-upload-wrap').removeClass('image-dropping');
             });
 
-               function ten() {
-                    //    {#ẩn block 1,2#}
-                       document.getElementById('1').style.display = 'none';
-                       document.getElementById('2').style.display = 'none';
-                    //    {#xoá và thêm tên class cho thẻ#}
-                       document.getElementById("img10").classList.add("active");
-                       document.getElementById("img20").classList.remove("active");
-                       document.getElementById("img30").classList.remove("active");
-                   }
-               function twenty() {
-                    //    {#ẩn block 2, hiện block 1#}
-                       document.getElementById('1').style.display = 'block';
-                       document.getElementById('2').style.display = 'none';
-                    //    {#xoá và thêm tên class cho thẻ#}
-                       document.getElementById("img10").classList.remove("active");
-                       document.getElementById("img30").classList.remove("active");
-                       document.getElementById("img20").classList.add("active");
-                   }
-               function thirty() {
-                    //    {#hiện block 1,2#}
-                       document.getElementById('1').style.display = 'block';
-                       document.getElementById('2').style.display = 'block';
-                    //    {#xoá và thêm tên class cho thẻ#}
-                       document.getElementById("img10").classList.remove("active");
-                       document.getElementById("img20").classList.remove("active");
-                       document.getElementById("img30").classList.add("active");
-                   }
-        </script>
-        <script>
-            var status = 1;
-            function forw() {
-                // {#hàm chỉnh score từ cao -> thấp#}
-                if (status == 0) {
-                    // {#xoá và thêm tên class cho thẻ#}
-                    document.getElementById("img1").classList.add("active");
-                    document.getElementById("img2").classList.remove("active");
-                    // {#đổi sang trạng thái 1: cao->thấp#}
-                    status = 1
-
-                    // {#code đảo ngược#}
-
-                    // {#code đảo ngược div parent#}
-                    var list0, i0, b0;
-                    list0 = document.getElementById("parent");
-                    b0 = list0.getElementsByTagName("div");
-                    // {#bo : list các div trong div parent#}
-
-                    for (i0 = b0.length - 1; i0 > 0; i0--) {
-                        b0[i0].parentNode.insertBefore(b0[b0.length - 1], b0[b0.length - i0 - 1]);
-                    }
-
-                    // {#code đảo ngược 3 div trong parent#}
-                    // {#div1#}
-                    var list1, i1, b1;
-                    list1 = document.getElementById("0");
-                    b1 = list1.getElementsByTagName("figure");
-
-                    for (i1 = b1.length - 1; i1 > 0; i1--) {
-                        b1[i1].parentNode.insertBefore(b1[b1.length - 1], b1[b1.length - i1 - 1]);
-                    }
-
-                    // {#div2#}
-                    var list2, i2, b2;
-                    list2 = document.getElementById("1");
-                    b2 = list2.getElementsByTagName("figure");
-
-                    for (i2 = b2.length - 1; i2 > 0; i2--) {
-                        b2[i2].parentNode.insertBefore(b2[b2.length - 1], b2[b2.length - i2 - 1]);
-                    }
-
-                    // {#div3#}
-                    var list3, i3, b3;
-                    list3 = document.getElementById("2");
-                    b3 = list3.getElementsByTagName("figure");
-
-                    for (i3 = b3.length - 1; i3 > 0; i3--) {
-                        b3[i3].parentNode.insertBefore(b3[b3.length - 1], b3[b3.length - i3 - 1]);
-                    }
-                }
-            }
-
-            function back() {
-            // {#hàm chỉnh score từ thấp -> thấp#}
-            if (status == 1) {
-                document.getElementById("img2").classList.add("active");
-                document.getElementById("img1").classList.remove("active");
-                status = 0
-
-                // {#code đảo ngược#}
-                var list0, i0, b0;
-                list0 = document.getElementById("parent");
-                b0 = list0.getElementsByTagName("div");
-
-                for (i0 = b0.length - 1; i0 > 0; i0--) {
-                    b0[i0].parentNode.insertBefore(b0[b0.length - 1], b0[b0.length - i0 - 1]);
-                }
-
-
-                // {#div1#}
-                var list1, i1, b1;
-                list1 = document.getElementById("0");
-                b1 = list1.getElementsByTagName("figure");
-
-                for (i1 = b1.length - 1; i1 > 0; i1--) {
-                    b1[i1].parentNode.insertBefore(b1[b1.length - 1], b1[b1.length - i1 - 1]);
-                }
-
-                // {#div2#}
-                var list2, i2, b2;
-                list2 = document.getElementById("1");
-                b2 = list2.getElementsByTagName("figure");
-
-                for (i2 = b2.length - 1; i2 > 0; i2--) {
-                    b2[i2].parentNode.insertBefore(b2[b2.length - 1], b2[b2.length - i2 - 1]);
-                }
-
-                // {#div3#}
-                var list3, i3, b3;
-                list3 = document.getElementById("2");
-                b3 = list3.getElementsByTagName("figure");
-
-                for (i3 = b3.length - 1; i3 > 0; i3--) {
-                    b3[i3].parentNode.insertBefore(b3[b3.length - 1], b3[b3.length - i3 - 1]);
-                }
-            }
-            }
-        </script>
+            </script>
     </body>
 </html>

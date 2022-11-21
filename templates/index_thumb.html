@@ -113,6 +113,29 @@
                 border: 0;
                 transition: all 0.2s ease;
             }
+
+            /* .column {
+            flex: 50%;
+            padding: 0 4px;
+            margin-left: 10px;
+            } */
+
+            .column img {
+            /* margin-top: 8px; */
+            /* vertical-align: middle; */
+            width: 100%;
+            height: 100%;
+            padding-top: 20px;
+            }
+
+            .column {
+                position: relative;
+                width: 100%;
+                /* max-width: 318px; */
+                display: grid;
+                grid-template-columns: auto auto auto auto;
+                padding: 20px;
+            }
         </style>
     </head>
     <body>
@@ -154,22 +177,26 @@
          
          <img src="{{ query_path }}" width="300px">
          <hr>
-         <h2>Result: </h2>
+         <h2>Result </h2>
             <h6>
              <figcaption>{{ precision }}</figcaption>
             </h6>
             <hr>
-            {% for score in scores %}
-            <figure style="float: left; margin-right: 20px; margin-bottom: 20px;">
-                <img  src="{{ score[0] }}" height="200px">
-                {% if score[1] %}
-                   <h6><figcaption style="color:green;">{{ score[1] }}</figcaption></h6>
-                {% else %}
-                   <h6><figcaption style="color: red;" >{{ score[1] }}</figcaption></h6>
-                {% endif %}
-            </figure>
-            {% endfor %}
-            {% endif %}
+            <div class="column">
+                <!-- <div style="display: flex;"> -->
+                    {% for score in scores %}
+                    <figure style="float: left; margin-right: 20px; margin-bottom: 20px;">
+                        <img  src="{{ score[0] }}" height="200px">
+                        {% if score[1] %}
+                        <h6><figcaption style="color:green;">{{ score[1] }}</figcaption></h6>
+                        {% else %}
+                        <h6><figcaption style="color: red;" >{{ score[1] }}</figcaption></h6>
+                        {% endif %}
+                    </figure>
+                    {% endfor %}
+                    {% endif %}
+                <!-- </div> -->
+            </div>
 
         </div>
 

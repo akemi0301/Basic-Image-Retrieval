@@ -23,7 +23,7 @@ Phần tính toán argminargmin được gọi là search trong index Faiss cho 
 - Tìm kiếm nhiều vector cùng một lúc (còn gọi là batch processing)
 - Lựa chọn giữa độ chính xác (precision) và tốc độ (accuracy). Ví dụ có thể giảm accuracy 10% để tăng gấp 10 tốc độ hoặc giảm 10 lần bộ nhớ
 - ...
-<img width="459" alt="image" src="[[https://user-images.githubusercontent.com/88385496/198692020-95495c2c-725f-4fd6-b850-7d1bc13238f0.png](https://images.viblo.asia/b8a1a28e-2f91-4d8a-84d6-c950a40693dd.jpg)]">
+<img width = "1080" alt="image" src="https://images.viblo.asia/b8a1a28e-2f91-4d8a-84d6-c950a40693dd.jpg">
 
 Similarity Search hiểu 1 cách đơn giản là đi tìm độ giống nhau giữa bức ảnh query và các bức ảnh khác trong dataset, sau đó trả về kết quả dựa trên sự giống nhau từ cao đến thấp. Khác với Image Classification, mỗi bức ảnh sẽ được phân loại vào 1 hoặc một vài class; với Image Retrieval, khi query là 1 bức ảnh thì kết quả trả về có thể là các bức ảnh thuộc class khác. Tham khảo https://www.facebook.com/machinelearningbasicvn/posts/436628436696993/
 
@@ -40,11 +40,11 @@ Các công cụ AI như mạng CNN được huấn luyện với mô hình deep 
 
 # Demo website
 - Giao diện của web
-<img width="1080" alt="image" src="<img width="1080" alt="image" src="https://user-images.githubusercontent.com/88385496/203021923-e0a32c0e-de9b-4bdf-9cec-901ab2430029.png">">
+<img width="1080" alt="image" src="https://user-images.githubusercontent.com/88385496/203021923-e0a32c0e-de9b-4bdf-9cec-901ab2430029.png">
 
 - Upload ảnh
-<img width="1080" alt="image" src="<img width="1080" alt="image" src="https://user-images.githubusercontent.com/88385496/203022076-4ddf651f-f372-4a91-b12d-41b63517b869.png">">
+<img width="1080" alt="image" src="https://user-images.githubusercontent.com/88385496/203022076-4ddf651f-f372-4a91-b12d-41b63517b869.png">
 
 - Kết quả 
-<img width="1063" alt="image" src="<img width="1080" alt="image" src="https://user-images.githubusercontent.com/88385496/203022162-e14dcba9-4c62-4c15-83e1-a0f7ebe7ca1d.png">">
+<img width="1063" alt="image" src="https://user-images.githubusercontent.com/88385496/203022162-e14dcba9-4c62-4c15-83e1-a0f7ebe7ca1d.png">
 

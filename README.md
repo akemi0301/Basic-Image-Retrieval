@@ -46,5 +46,4 @@ Các công cụ AI như mạng CNN được huấn luyện với mô hình deep 
 <img width="1080" alt="image" src="https://user-images.githubusercontent.com/88385496/203022076-4ddf651f-f372-4a91-b12d-41b63517b869.png">
 
 - Kết quả 
-<img width="1063" alt="image" src="https://user-images.githubusercontent.com/88385496/203022162-e14dcba9-4c62-4c15-83e1-a0f7ebe7ca1d.png">
-
+<img width="1080" alt="image" src="https://user-images.githubusercontent.com/88385496/203039155-908233bd-8611-4a8a-83af-b7158dc9b14a.png">

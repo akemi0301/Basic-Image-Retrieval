@@ -2,3 +2,5 @@ Pillow
 Flask
 tensorflow>=2.0.0
 BeautifulSoup4
+faiss
+ipywidgets

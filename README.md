@@ -18,7 +18,7 @@ Bắt đầu với một tập các vector $x_i$ có **d** chiều, Faiss sẽ t
 $$i = argmin_i ||x - x_i||$$
 Trong Faiss, đây được gọi là tạo ra **index**, một object có khả năng add các vector $x_i$. 
 
-Phần tính toán argminargmin được gọi là search trong index Faiss cho phép:
+Phần tính toán argmin được gọi là search trong index Faiss cho phép:
 - Trả về nhiều kết quả có độ tương tự giống nhau
 - Tìm kiếm nhiều vector cùng một lúc (còn gọi là batch processing)
 - Lựa chọn giữa độ chính xác (precision) và tốc độ (accuracy). Ví dụ có thể giảm accuracy 10% để tăng gấp 10 tốc độ hoặc giảm 10 lần bộ nhớ

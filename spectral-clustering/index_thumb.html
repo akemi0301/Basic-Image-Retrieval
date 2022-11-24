@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+        <style type="text/css">
+            hr.style-five {
+                border: 0;
+                height: 0; /* Firefox... */
+                box-shadow: 0 0 10px 1px black;
+            }
+            hr.style-five:after {
+                /* Not really supposed to work, but does */
+                content: "\00a0"; /* Prevent margin collapse */
+            }
+            .file-upload {
+                background-color: #ffffff;
+                width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            .file-upload-btn {
+                width: 100%;
+                margin: 0;
+                color: #fff;
+                background: #1fb264;
+                border: none;
+                padding: 10px;
+                border-radius: 4px;
+                border-bottom: 4px solid #15824b;
+                transition: all 0.2s ease;
+                outline: none;
+                text-transform: uppercase;
+                font-weight: 700;
+            }
+            .file-upload-btn:hover {
+                background: #1aa059;
+                color: #ffffff;
+                transition: all 0.2s ease;
+                cursor: pointer;
+            }
+            .file-upload-btn:active {
+                border: 0;
+                transition: all 0.2s ease;
+            }
+            .file-upload-content {
+                display: none;
+                text-align: center;
+            }
+            .file-upload-input {
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                outline: none;
+                opacity: 0;
+                cursor: pointer;
+            }
+            .image-upload-wrap {
+                margin-top: 20px;
+                border: 4px dashed #1fb264;
+                position: relative;
+            }
+            .image-dropping,
+            .image-upload-wrap:hover {
+                background-color: #1fb264;
+                border: 4px dashed #ffffff;
+            }
+            .image-title-wrap {
+                padding: 0 15px 15px 15px;
+                color: #222;
+            }
+            .drag-text {
+                text-align: center;
+            }
+            .drag-text h3 {
+                font-weight: 100;
+                text-transform: uppercase;
+                color: #15824b;
+                padding: 60px 0;
+            }
+            .file-upload-image {
+                max-height: 200px;
+                max-width: 200px;
+                margin: auto;
+                padding: 20px;
+            }
+            .remove-image {
+                width: 200px;
+                margin: 0;
+                color: #fff;
+                background: #cd4535;
+                border: none;
+                padding: 10px;
+                border-radius: 4px;
+                border-bottom: 4px solid #b02818;
+                transition: all 0.2s ease;
+                outline: none;
+                text-transform: uppercase;
+                font-weight: 700;
+            }
+            .remove-image:hover {
+                background: #c13b2a;
+                color: #ffffff;
+                transition: all 0.2s ease;
+                cursor: pointer;
+            }
+            .remove-image:active {
+                border: 0;
+                transition: all 0.2s ease;
+            }
+            .column img {
+            padding-top: 20px;
+            }
+            .column {
+                position: relative;
+                width: 100%;
+                /* max-width: 318px; */
+                display: grid;
+                grid-template-columns: auto auto auto auto;
+                padding: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <br />
+            <div style="text-align: center;">
+                <h1>Basic Image Retrieval</h1>
+                <br />
+                <!-- {# form file submit#} -->
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="file-upload">
+                        <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+                        <div class="image-upload-wrap">
+                            <input class="file-upload-input" type="file" name="query_img" onchange="readURL(this);" accept="image/*" />
+                            <div class="drag-text">
+                                <h3>Drag and drop a file or select add Image</h3>
+                            </div>
+                        </div>
+                        <div class="file-upload-content">
+                            <img class="file-upload-image" src="#" alt="your image" />
+
+                            <div class="image-title-wrap">
+                                <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin: 0px 10px;">Submit</button>
+                    <br />
+                    <h5>{{mess}}</h5>
+                </form>
+            </div>
+        <div>
+
+          {% if query_path %}
+         <h2>Query</h2>
+         <hr>
+         
+         <img src="{{ query_path }}" height="300px", width="250px">
+         <hr>
+         <h2>Result </h2>
+            <h6>
+             <figcaption>{{ precision }}</figcaption>
+            </h6>
+            <hr>
+            <div class="column">
+                <!-- <div style="display: flex;"> -->
+                    {% for score in scores %}
+                    <figure style="float: left; margin-right: 20px; margin-bottom: 20px;">
+                        <img  src="{{ score[0] }}" height="300px", width="250px">
+                        {% if score[1] %}
+                        <h6><figcaption style="color:green;">{{ score[1] }}</figcaption></h6>
+                        {% else %}
+                        <h6><figcaption style="color: red;" >{{ score[1] }}</figcaption></h6>
+                        {% endif %}
+                    </figure>
+                    {% endfor %}
+                    {% endif %}
+                <!-- </div> -->
+            </div>
+
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <!-- <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> -->
+        <script type="text/javascript">
+            // Add the following code if you want the name of the file appear on select
+
+            function readURL(input) {
+             if (input.files && input.files[0]) {
+
+               var reader = new FileReader();
+
+               reader.onload = function(e) {
+                 $('.image-upload-wrap').hide();
+
+                 $('.file-upload-image').attr('src', e.target.result);
+                 $('.file-upload-content').show();
+
+                 $('.image-title').html(input.files[0].name);
+               };
+
+               reader.readAsDataURL(input.files[0]);
+
+             } else {
+               removeUpload();
+             }
+            }
+
+            function removeUpload() {
+             $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+             $('.file-upload-content').hide();
+             $('.image-upload-wrap').show();
+            }
+            $('.image-upload-wrap').bind('dragover', function () {
+               $('.image-upload-wrap').addClass('image-dropping');
+             });
+             $('.image-upload-wrap').bind('dragleave', function () {
+               $('.image-upload-wrap').removeClass('image-dropping');
+            });
+
+            </script>
+    </body>
+</html>

@@ -5,73 +5,55 @@ from datetime import datetime
 from tensorflow.keras.preprocessing import image
 from flask import Flask, request, render_template
 from model import FeatureExtractor
-from scipy.spatial import distance
-
-# Đọc vectors từ file csv
-global_df_vectors = pd.read_csv('./static/feature/clusters.csv')
-# Đọc centroids từ file css
-global_centroids = pd.read_csv('./static/feature/centroids.csv')
-
-folder_query = "query_pic/"
-
-root_feature_path = "./static/feature/all_features.npz"
-
-data = np.load(root_feature_path)
-paths_feature = data["array1"]
-imgs_feature = data["array2"]
+from sklearn.metrics.pairwise import cosine_similarity
 
 fe = FeatureExtractor()
 
-def cosine_similarity(query, X):
-    norm_2_query = np.sqrt(np.sum(query*query))
-    norm_2_X = np.sqrt(np.sum(X*X, axis=-1))
-    return np.sum(query*X, axis=-1)/(norm_2_query*norm_2_X)
+# Đọc vectors từ file csv
+global_df_vectors = pd.read_csv('./static/cluster/clusters_30.csv')
+# Đọc centroids từ file csv
+global_centroids = pd.read_csv('./static/cluster/centroids_30.csv')
 
-def retrieval_images(query_vector, imgs_feature):
-    # caculate similarity between query and features in database
-    rates = cosine_similarity(query_vector, imgs_feature)
-    id_s = np.argsort(-rates)[:100] # Top 30 results
-    return [(round(rates[id], 2), paths_feature[id]) for id in id_s]
+#Tra cứu ảnh và đánh giá 
+def search_evaluate(search_vector, global_df_vectors, global_centroids):
 
-def euclid_similarity(df, X):
-    return np.linalg.norm(np.array(df[df.columns[0:2048]])- X, axis=1)
-
-def ranking_cluster(df_vect, search_vector):
-  #Ranking lại cluster
-  distance = euclid_similarity(df_vect, search_vector)
-  df_vect['distance'] = pd.Series(distance, index=df_vect.index)
-  df_vect['rank'] = df_vect['distance'].rank(ascending = 1)
-  df_vect = df_vect.set_index('rank')
-  df_vect = df_vect.sort_index()
-  return df_vect
-
-#Tra cứu ảnh
-def search_images(search_vector, global_df_vectors, global_centroids):
-  # Đọc vectors, centroids từ file csv
+  # Đọc vectors từ file csv
   df_vectors = global_df_vectors
+  # Đọc centroids từ file csv
   centroids = global_centroids
+  # Tính khoảng cách giữa các tâm cụm và điểm ảnh truy vấn
+  # distance = np.linalg.norm(np.array(centroids[centroids.columns[0:2048]])- search_vector, axis=1)
+  distance = np.linalg.norm(1- cosine_similarity(centroids[centroids.columns[0:2048]], search_vector),axis =1)
+  print(distance)
 
-  # So sánh features của ảnh query với centroid features và lấy tên cluster min
-  distance = euclid_similarity(centroids, search_vector)
+  #Lấy tên cluster có tâm cụm min
   min_cluster = list(distance).index(np.min(distance))
+  print(min_cluster)
 
-  #Lấy ra cluster giống với ảnh query được chọn, ranking lại cluster
+  #Lấy ra các cụm gần nhất với điểm ảnh truy vấn
   df_vectors = df_vectors[df_vectors["cluster"]== min_cluster]
-  df_vectors = ranking_cluster(df_vectors, search_vector)
+  print(df_vectors.describe(include="all"))
 
-  #Lấy ra cluster giống với ảnh query được chọn, ranking lại cluster
-  df_vect = df_vectors[df_vectors["cluster"]== min_cluster]
-  df_vect = ranking_cluster(df_vect, search_vector)
+  # Tính khoảng cách giữ điểm ảnh truy vấn và các điểm trong cụm gần nhất đó
+  # distance = np.linalg.norm(np.array(df_vectors[df_vectors.columns[0:2048]])- search_vector, axis=1)
+  distance = np.linalg.norm(1- cosine_similarity(df_vectors[df_vectors.columns[0:2048]], search_vector),axis =1)
+  df_vectors['distance'] = pd.Series(distance, index=df_vectors.index)
+  
+  # Sắp xếp lại các điểm trong cụm theo thứ tự tăng dần của khoảng cách tới điểm ảnh truy vấn
+  df_vectors['rank'] = df_vectors['distance'].rank(ascending = 1)
+  df_vectors = df_vectors.set_index('rank')
+  df_vectors = df_vectors.sort_index()
 
-  #Lấy ra kết quả tối đa  100 ảnh giống nhất với ảnh query trong cluster
-  return df_vect[0:100] 
+  #Lấy ra kết quả tối đa 100 ảnh giống nhất với ảnh query trong cluster
+  result = df_vectors[0:100] 
 
-# Đánh giá 
-def evaluate(result, content_img_test):
+  content_image = result['label'].iloc[0]
+  print(content_image)
+
   #So sánh với nhãn để đánh giá true/false
   content_compare = []
   for content in result['label']:
-    if str(content) == content_img_test:
+    if str(content) == content_image:
       content_compare.append(True)
     else:
       content_compare.append(False)
@@ -79,7 +61,8 @@ def evaluate(result, content_img_test):
   correct_result=content_compare.count(True)
   precision = correct_result/len(content_compare)
   print('Precision:',precision)
-  return result,precision
+  return result, precision
+
 
 # build web Flask
 app = Flask(__name__)
@@ -101,35 +84,20 @@ def index():
         query = image.img_to_array(query, dtype=np.float32)
         query_vector = fe.extract(query[None, :])
 
-        # retrieval_images
-        # scores = retrieval_images(query_vector, imgs_feature)
-
-        # Tra cứu ảnh
-        result = search_images(query_vector, global_df_vectors, global_centroids)
-        
-        # lấy content là 3 kí tự đầu của tên query image để evaluate kết quả
-        content_image = result['label'].iloc[0]
-        print(content_image)
-        result, ps = evaluate(result, content_image)
-
+        #Tra cứu ảnh và đánh giá
+        result, ps = search_evaluate(query_vector, global_df_vectors, global_centroids)
         # Lấy kết quả và gửi đến html
         rs = result[['img_path','Content_compare']]  
         rs = rs.to_records(index=False)
         rs = list(rs)
         precision = "Precision: "+str(ps)
 
-        return render_template('index.html',
+        return render_template('index_thumb.html',
                             query_path=uploaded_img_path,
                             scores=rs,
                             precision = precision)
 
-        # return render_template('index_thumb.html',
-        #                        query_path=uploaded_img_path,
-        #                        scores1=rs[:10],
-        #                        scores2=rs[10:20],
-        #                        scores3=rs[20:])
-
-    return render_template('index.html')
+    return render_template('index_thumb.html')
 
 if __name__=="__main__":
     app.run(host='127.0.0.1', port=8080, debug=True)

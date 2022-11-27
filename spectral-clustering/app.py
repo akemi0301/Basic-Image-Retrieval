@@ -125,13 +125,13 @@ def index():
         precision = "Precision: "+str(ps)
         time = "Time: "+str(time)+ "seconds"
 
-        return render_template('index.html',
+        return render_template('index_thumb.html',
                             query_path=uploaded_img_path,
                             scores = result,
                             precision = precision,
                             time = time)
 
-    return render_template('index.html')
+    return render_template('index_thumb.html')
 
 if __name__=="__main__":
     app.run(host='127.0.0.1', port=8080, debug=True)

@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
-from tensorflow.keras.preprocessing import image as kimage
+from tensorflow.keras.preprocessing import image
 from model import FeatureExtractor
 
 root_img_path = "./static/img/"
@@ -17,8 +17,8 @@ def folder_to_images(folder):
     images_path = []
     for path in list_dir:
         try:
-            img = kimage.load_img(path, target_size=(224, 224))
-            images_np[i] = kimage.img_to_array(img, dtype=np.float32)
+            img = image.load_img(path, target_size=(224, 224))
+            images_np[i] = image.img_to_array(img, dtype=np.float32)
             images_path.append(path)
             folder_name.append(path.split('/')[-2])
             i += 1

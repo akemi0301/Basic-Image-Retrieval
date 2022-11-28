@@ -13,7 +13,7 @@ Xây dựng một chương trình cho phép truy vấn hình ảnh sử dụng c
 ## Faiss
 Facebook AI Similarity Search (Faiss) là một thư viện sử dụng similiarity search cùng với clustering các vector. Faiss được nghiên cứu và phát triển bởi đội ngũ Facebook AI Research; được viết trong C++ và đóng gói trên môi trường Python. Bộ thư viện bao gồm các thuật toán tìm kiếm vector đa chiều trong similarity search
 
-##Annoy (Approximate Nearest Neighbors Oh Yeah)
+## Annoy (Approximate Nearest Neighbors Oh Yeah)
 - Approximate Nearest Neighbors Oh Yeah (Annoy) là một thư viện C ++ với các ràng buộc Python để tìm kiếm các điểm trong không gian gần với một điểm truy vấn nhất định. Nó cũng tạo ra các cấu trúc dữ liệu dựa trên tệp chỉ đọc lớn được đưa vào bộ nhớ để nhiều quy trình có thể chia sẻ cùng một dữ liệu.
 
 ### Similarity search

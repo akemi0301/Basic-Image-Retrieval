@@ -47,3 +47,6 @@ Các công cụ AI như mạng CNN được huấn luyện với mô hình deep 
 
 - Kết quả 
 <img width="1080" alt="image" src="https://user-images.githubusercontent.com/88385496/203039155-908233bd-8611-4a8a-83af-b7158dc9b14a.png">
+
+##Annoy (Approximate Nearest Neighbors Oh Yeah)
+- Approximate Nearest Neighbors Oh Yeah (Annoy) là một thư viện C ++ với các ràng buộc Python để tìm kiếm các điểm trong không gian gần với một điểm truy vấn nhất định. Nó cũng tạo ra các cấu trúc dữ liệu dựa trên tệp chỉ đọc lớn được đưa vào bộ nhớ để nhiều quy trình có thể chia sẻ cùng một dữ liệu.

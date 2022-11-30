@@ -35,10 +35,11 @@ Thuật toán Spectral Clustering sẽ phân các bức ảnh trong tập ảnh 
  Sau khi tìm được cụm gần nhất với điểm ảnh truy vấn rồi. Chúng ta lần nữa sử dụng khoảng cách Cosine để tính khoảng cách giữ điểm ảnh truy vấn và các điểm trong cụm gần nhất đó. Sau đó sắp xếp lại các điểm trong cụm theo thứ tự tăng dần của khoảng cách tới điểm ảnh truy vấn. Mục đích để lấy ra tối đa 100 điểm có khoảng cách gần nhất. Và những điểm đó chính là những ảnh giống với ảnh truy vấn nhất, là kết quả của phương pháp tra cứu ảnh nhanh.
  
 ### 5. Ưu nhược điểm
-Ưu điểm:
+**Ưu điểm:**
 - Nhanh hơn so với truy vấn trực tiếp từ các CSDL vector đặc trưng
 - Độ chính xác tương đối
-Nhược điểm
+
+**Nhược điểm**
 - Số lượng cụm như thế nào là tốt.
 - Kết quả có thể không phải là ảnh thật sự gần nhất 
 - Tốn kém chi phí tính toán đối với dữ liệu lớn

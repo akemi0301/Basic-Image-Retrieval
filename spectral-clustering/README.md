@@ -1,6 +1,6 @@
 ## Xây dựng trang web tra cứu ảnh sử dụng phân cụm Spectral Clustering
 ### 1. Tra cứu ảnh dựa vào nội dung (màu sắc, hình dạng, ...)
-![content-based image retrieval](https://images.viblo.asia/1584daee-c9f8-421c-9c26-e37d91387685.png)
+![cosine](https://user-images.githubusercontent.com/85627308/204691544-bf49c875-dcd7-40b4-bdcd-1519a1480181.png)
 
 Content-based IR là việc tìm kiếm dựa trên nội dung của ảnh (giá trị các pixel trong ảnh). 
 Đại khái, chúng là: sự giống nhau về màu sắc, sự giống nhau về kết cấu và sự giống nhau về phạm trù ngữ nghĩa.
@@ -8,7 +8,7 @@ Ví dụ của việc này chính là Google Hình ảnh như query là 1 bức 
 
 
 ### 2. Tra cứu ảnh sử dụng phân cụm spectral clustering
-![Tra cứu ảnh sử dụng phân cụm Spectral Clustering](https://images.viblo.asia/bc389437-ea9f-45f5-9d9e-61472aa87e77.png)
+![specl_tq](https://user-images.githubusercontent.com/85627308/204691602-752d253f-45fd-43d8-a33b-78ad049af8f6.png)
 
 Về bản chất, mỗi ảnh đều đã được biểu diễn bởi 1 vector N chiều. Nhiệm vụ bây giờ là tìm kiếm các vector tương đồng trên toàn bộ tập dữ liệu với các metric quen thuộc như: cosine, euclid, ..  Khi so sánh độ tương đồng giữa 2 ảnh, khoảng cách càng nhỏ chứng tỏ sự tương đồng giữa 2 hay nhiều vector càng cao. 
 

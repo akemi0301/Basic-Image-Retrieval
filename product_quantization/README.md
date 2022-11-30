@@ -1,28 +1,28 @@
-## Vector Quantization
+### 1. Vector Quantization
 Ý tưởng ban đầu sử dụng Vector Quantization. Cụ thể, thay vì tìm kiếm trên 1 tỉ bức ảnh thì ta phân cụm với k-means được 1 triệu cluster chẳng hạn, mỗi cluster ứng với 1 centroid. Khi thực hiện tìm kiếm với query là một bức ảnh, sau khi thực hiện feature engineering thu được 1 vector N chiều, vector đó sẽ được so sánh với các centroid để tìm ra centroid gần nhất. Từ đó, chỉ cần so sánh các ảnh trong cluster đó với query vector. Kĩ thuật này dùng để xấp xỉ 1 vector bằng 1 vector khác, trong trường hợp này là centroid, hay kĩ thuật Vector Quantization. 
 
 Tuy nhiên, việc phân cụm ra 1 triệu cluster và so sánh trong cluster gần nhất vẫn rất tốn thời gian, 1 kĩ thuật đơn giản hơn được đề xuất gọi là Product Quantization. Product Quantization là một trong những phương pháp tỏ ra khá hiệu quả trong việc handing với tập dữ liệu lớn (large-scale data). Mỗi vector sẽ được chia nhỏ (split) và được ánh xạ thành các short code hoặc PQ-code, khi phân cụm ta tiến hành ngay trên tập vector đã được chia nhỏ đó (sub-vectors).
 
-Lấy ví dụ bạn có 1 tập dữ liệu với gồm 50000 ảnh, mỗi ảnh sau khi thực hiện feature extraction qua mạng CNN thu được 1 vector 1024D. Như vậy, ta có 1 ma trận: 50000x1024
+### 2. Thuật toán Product Quantization
 
-![0](https://user-images.githubusercontent.com/85627308/204157125-6b6a0b4b-5972-44bb-ac79-db91e0aca929.png)
+![pq](https://user-images.githubusercontent.com/85627308/204690397-76b29d38-16f6-4f21-b835-d15a5e465eac.png)
 
-Ta tiến hành chia nhỏ (split) từng vector thành 8 tập sub-vectors, mỗi sub-vectors là 128D (128 * 8 = 1024). Khi đó, ta thu được một tập hợp các sub-vectors như hình bên dưới:
+**Tham khảo:**
 
-![1](https://i.imgur.com/USbxWhz.png)
+[1] [A Survey of Product Quantization](https://www.jstage.jst.go.jp/article/mta/6/1/6_2/_pdf/)
 
-Ta thực hiện phân cụm với thuật toán k-means với từng tập sub-vectors của 50000 ảnh (ứng với từng cột sub-vectors như hình dưới), kết quả thu được là một tập các cụm của sub-vectors:
+[2] [Product quantization for similarity search](https://towardsdatascience.com/product-quantization-for-similarity-search-2f1f67c5fddd)
 
-![](https://i.imgur.com/fe0VCo0.png)
 
-Khi đó, mỗi cột (8 cột) được gọi là 1 sub-codebook và mỗi cụm (256 cụm mỗi sub-codebook) được gọi là một sub-codeword (mỗi sub-codeword ứng với 1 centroid. Sau khi thu được các cluster và đánh index từ 1->256, ta tính toán theo 2 công thức
+### 3. Đánh giá
 
-![Imgur](https://i.imgur.com/N1HHaeF.png)
+**Ưu điểm:**
+Tiết kiệm khong gian bộ nhớ: Vì mỗi vectơ trong cơ sở dữ liệu được chuyển đổi thành một short code (PQ code), một biểu diễn cực kỳ hiệu quả về bộ nhớ để tìm kiếm lân cận gần nhất. Như đã minh họa trong ví dụ này, mức sử dụng bộ nhớ giảm tới 64 lần (từ 512 byte xuống 8 byte cho mỗi vectơ) và đó là một lượng đáng kể khi xử lý dữ liệu lớn
 
-![Imgur](https://i.imgur.com/0IbaC6T.png)
+**Nhược điểm:**
+Việc tìm kiếm chưa tối ưu: Vì tra cứu khoảng cách và tính tổng cần phải được thực hiện cho tất cả các hàng của PQ code.
+Độ chính xác mang tính tương đối: Vì chúng ta đang so sánh khoảng cách giữa vectơ với tâm, nên khoảng cách không chính xác là khoảng cách giữa vectơ với vectơ. Chúng chỉ là khoảng cách ước tính, và do đó kết quả có thể ít chính xác hơn và có thể không phải lúc nào cũng là những ảnh thực sự gần nhất.
 
-thu được short-code tương ứng với vector đầu vào xx (hàng xanh lá cây như hình bên dưới)
 
-![compression](https://i.imgur.com/JbCX9RV.png)
+Chất lượng tìm kiếm có thể được cải thiện bằng cách điều chỉnh số lượng trọng tâm hoặc số lượng phân đoạn. Nhiều trọng tâm hoặc phân đoạn dẫn đến độ chính xác và độ chính xác cao hơn, nhưng chúng cũng sẽ làm chậm hoạt động tìm kiếm cũng như thời gian cần thiết để đào tạo và mã hóa. Ngoài ra, nhiều trọng tâm hơn có thể dẫn đến sự gia tăng số lượng bit cần thiết để biểu diễn mã và do đó tiết kiệm bộ nhớ ít hơn.
 
-Giả sử với 1 vector ban đầu 1024D 32-bit floats (tương đương 4096 bytes). Sau khi chia nhỏ vector, mỗi sub-vector lại có kích thước 128D 32-bit floats (4096 bytes). Bởi vì, ta có 256 centroid (cluster) nên chỉ cần dùng 8-bits để lưu giữ các centroid id. Với phương pháp Lossy Compression này, ta giảm thiểu được bộ nhớ khi truy vấn đi rất nhiều lần, đồng thời, thời gian tìm kiếm cũng nhanh chóng hơn bằng việc xấp xỉ vector ban đầu bằng PQ-code.
